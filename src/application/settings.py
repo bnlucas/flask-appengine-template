@@ -13,13 +13,7 @@ import os
 from secret_keys import CSRF_SECRET_KEY, SESSION_KEY
 
 
-DEBUG_MODE = False
-
-# Auto-set debug mode based on App Engine dev environ
-if 'SERVER_SOFTWARE' in os.environ and os.environ['SERVER_SOFTWARE'].startswith('Dev'):
-    DEBUG_MODE = True
-
-DEBUG = DEBUG_MODE
+DEBUG = False
 
 # Set secret keys for CSRF protection
 SECRET_KEY = CSRF_SECRET_KEY
@@ -33,4 +27,4 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 
 # Flask-Cache settings
-CACHE_TYPE = 'gaememcached'
+CACHE_TYPE = 'redis'
