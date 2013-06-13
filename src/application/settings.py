@@ -27,4 +27,4 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 
 # Flask-Cache settings
-CACHE_TYPE = 'redis'
+CACHE_TYPE = 'simple'
