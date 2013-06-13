@@ -19,7 +19,7 @@ from forms import ExampleForm
 from models import ExampleModel
 
 
-# Flask-Cache (configured to use App Engine Memcache API)
+# Flask-Cache (configured to use Flask_Cahce simple) ## redis default soon.
 cache = Cache(app)
 
 def home():
