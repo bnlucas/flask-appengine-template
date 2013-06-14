@@ -1,12 +1,10 @@
-Flask on App Engine Project Template
+Flask on AppFog Project Template
 ====================================
 
 Boilerplate project template for running a Flask-based application on
-Google App Engine (Python)
+AppFog (Python)
 
-Python 2.7 Runtime Support
---------------------------
-* Support for the Python 2.7 runtime was added to this project in May 2012.
+Based on the wonderful [flask-appengine-template][fat] by [Kamal Gill][kamalgill]
 
 
 About Flask
@@ -20,16 +18,15 @@ See <http://flask.pocoo.org> for more info.
 Setup/Configuration
 -------------------
 1. Download this repository via
-   `git clone git@github.com:kamalgill/flask-appengine-template.git`
+   `git clone git@github.com:bnlucas/flask-appfog-template.git`
    or download the tarball at
-   <http://github.com/kamalgill/flask-appengine-template/tarball/master>
+   <http://github.com/bnlucas/flask-appfog-template/tarball/master>
 2. Copy the src/ folder to your application's root folder
-3. Set the application id in `src/app.yaml`
-4. Configure datastore models at `src/application/models.py`
-5. Configure application views at `src/application/views.py`
-6. Configure URL routes at `src/application/urls.py`
-7. Configure forms at `src/application/forms.py`
-8. Add the secret keys for CSRF protection by running the `generate_keys.py`
+3. Configure datastore models at `src/application/models.py`
+4. Configure application views at `src/application/views.py`
+5. Configure URL routes at `src/application/urls.py`
+6. Configure forms at `src/application/forms.py`
+7. Add the secret keys for CSRF protection by running the `generate_keys.py`
    script at `src/application/generate_keys.py`, which will generate the
    secret keys module at src/application/secret_keys.py
 
@@ -57,45 +54,31 @@ which can be installed via:
 Front-end Customization
 -----------------------
 1. Customize the main HTML template at
-   `src/application/static/templates/base.html`
-2. Customize CSS styles at `src/application/static/css/main.css`
-3. Add custom JavaScript code at `src/application/static/js/main.js`
-4. Customize favicon at `src/application/static/img/favicon.ico`
-5. Customize 404 page at `src/application/templates/404.html`
+   `src/templates/base.html`
+2. Customize CSS styles at `src/static/css/main.css`
+3. Add custom JavaScript code at `src/static/js/main.js`
+4. Customize favicon at `src/static/img/favicon.ico`
+5. Customize 404 page at `src/templates/404.html`
 
 
 Previewing the Application
 --------------------------
-To preview the application using App Engine's development server,
-use [dev_appserver.py][devserver]
-
 <pre class="console">
-  dev_appserver.py src/
+  wsgi.py src/
 </pre>
 
-Assuming the latest App Engine SDK is installed, the test environment is
-available at <http://localhost:8080>
-
-
-Admin Console
--------------
-The admin console is viewable at http://localhost:8000 (note distinct port from dev app server)
-
-
-Flask-Cache
------------
-The handy Flask-Cache extension is included, pre-configured for App Engine's Memcache API.
-Use the "Flush Cache" button at http://localhost:8000/memcache to clear the cache.
+The test environment is available at <http://127.0.0.1:5000>
 
 
 Deploying the Application
 -------------------------
-To deploy the application to App Engine, use [appcfg.py update][appcfg]
+To deploy the application to AppFog, use [af update][af]
 <pre class="console">
-  appcfg.py update src/
+  af login
+  af update {APPID}
 </pre>
 
-The application should be visible at http://{YOURAPPID}.appspot.com
+The application should be visible at http://{APPID}.{APPSERVER}.af.cm
 
 
 Folder structure
@@ -104,19 +87,38 @@ The App Engine app's root folder is located at `src/`.
 
 <pre class="console">
   src/
-  |-- app.yaml (App Engine config file)
   |-- application (application code)
-  |-- index.yaml (App Engine query index definitions)
   |-- lib/
   |   |-- blinker/ (library for event/signal support)
   |   |-- flask/ (Flask core)
   |   |-- flask_cache/  (Flask-Cache extension)
   |   |-- flask_debugtoolbar/  (Port of Django Debug Toolbar to Flask)
   |   |-- flaskext/ (Flask extensions go here)
-  |   |-- gae_mini_profiler/ (Appstats-based profiler)
+  |   |-- jinja2/ (Jinja2 Templateing)
   |   |-- werkzeug/ (WSGI utilities for Python-based web development)
   |   `-- wtforms/ (Jinja2-compatible web form utility)
   |-- tests/ (unit tests)
+  |-- static/
+  |   |-- css/
+  |   |   |-- bootstrap-*.css (Twitter Bootstrap styles)
+  |   |   |-- fontawesome-*.css (Fontawesome styles)
+  |   |   `-- main.css (custom styles)
+  |   |-- font/
+  |   |   `various fontawesome font files
+  |   |-- img/
+  |   |   |-- favicon.ico
+  |   |   |-- favicon.png
+  |   |   `-- glyphicons-*.png (Twitter bootstrap icons sprite)
+  |   `-- js/
+  |       |-- main.js (site-wide JS)
+  |       `-- lib/ (third-party JS libraries)
+  |           |--bootstrap-*.js (Bootstrap jQuery plugins
+  |           `--modernizer-*.js (HTML5 detection library)
+  |-- templates/
+  |   |-- includes/ (common include files)
+  |   |-- 404.html (not found page)
+  |   |-- 500.html (server error page)
+  |   |-- base.html (master template)
 </pre>
 
 The application code is located at `src/application`.
@@ -126,31 +128,9 @@ The application code is located at `src/application`.
   |-- __init__.py (initializes Flask app)
   |-- decorators.py (decorators for URL handlers)
   |-- forms.py (web form models and validators)
+  |-- generate_keys.py (generate CSRF and session keys)
   |-- models.py (App Engine datastore models)
   |-- settings.py (settings for Flask app)
-  |-- static
-  | |-- css
-  | | |-- bootstrap-*.css (Twitter Bootstrap styles)
-  | | |-- fontawesome-*.css (Fontawesome styles)
-  | | `-- main.css (custom styles)
-  | |-- font
-  | | `various fontawesome font files
-  | |-- img
-  | | |-- favicon.ico
-  | | |-- favicon.png
-  | | `-- glyphicons-*.png (Twitter bootstrap icons sprite)
-  | `-- js
-  |   |-- main.js (site-wide JS)
-  |   `-- lib/ (third-party JS libraries)
-  |     |--bootstrap-*.js (Bootstrap jQuery plugins
-  |     `--modernizer-*.js (HTML5 detection library)
-  |-- templates
-  | |-- includes/ (common include files)
-  | |-- 404.html (not found page)
-  | |-- 500.html (server error page)
-  | |-- base.html (master template)
-  | |-- list_examples.html (example list-based template)
-  | `-- new_example.html (example form-based template)
   |-- urls.py (URL dispatch routes)
   `-- views.py (Handlers for URL routes defined at urls.py)
 </pre>
@@ -180,21 +160,24 @@ See licenses/ folder
 Package Versions
 ----------------
 - Blinker: 1.1
-- Bootstrap: 2.3.1
+- Bootstrap: 2.3.1 (set in base.html)
 - Flask: 0.9
 - Flask-Cache 0.10.1
 - Flask-DebugToolbar: 0.7.1
 - Flask-WTF: 0.6
 - FontAwesome: 3.0
-- Jinja2: 2.6 (included in GAE)
+- Jinja2: 2.6
 - jQuery: 1.9.1 (set in base.html)
-- Modernizr: 2.6.2
+- Modernizr: 2.6.2 (set in base.html)
 - Werkzeug: 0.8.3
 - WTForms: 1.0.4
 
 
 Credits
 -------
+This is an AppFog port of [Kamal Gill's][kamalgill]
+[flask-appengine-template][fat]
+
 Project template layout was heavily inspired by Francisco Souza's
 [gaeseries Flask project][gaeseries]
 
@@ -222,3 +205,6 @@ HTML5 detection provided by [Modernizr 2][modernizr] (configured with all featur
 [profiler]: http://packages.python.org/Flask-GAE-Mini-Profiler/
 [wz]: http://werkzeug.pocoo.org/
 [wzda]: https://github.com/nshah/werkzeug-debugger-appengine
+[kamalgill]: https://github.com/kamalgill
+[fat]: https://github.com/kamalgill/flask-appengine-template
+[af]: https://docs.appfog.com/getting-started/af-cli
