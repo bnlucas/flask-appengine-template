@@ -13,7 +13,7 @@ import os
 from secret_keys import CSRF_SECRET_KEY, SESSION_KEY
 
 
-DEBUG = False
+DEBUG = True
 
 # Set secret keys for CSRF protection
 SECRET_KEY = CSRF_SECRET_KEY

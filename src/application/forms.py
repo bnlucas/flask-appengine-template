@@ -11,9 +11,9 @@ See: http://flask.pocoo.org/docs/patterns/wtforms/
 from flaskext import wtf
 from flaskext.wtf import validators
 
-from .models import ExampleModel
+# from .models import ExampleModel
 
 
-class ClassicExampleForm(wtf.Form):
-    example_name = wtf.TextField('Name', validators=[validators.Required()])
-    example_description = wtf.TextAreaField('Description', validators=[validators.Required()])
+#class ClassicExampleForm(wtf.Form):
+#    example_name = wtf.TextField('Name', validators=[validators.Required()])
+#    example_description = wtf.TextAreaField('Description', validators=[validators.Required()])
