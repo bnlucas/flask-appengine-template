@@ -64,7 +64,7 @@ Front-end Customization
 Previewing the Application
 --------------------------
 <pre class="console">
-  wsgi.py src/
+  wsgi.py
 </pre>
 
 The test environment is available at <http://127.0.0.1:5000>
@@ -118,7 +118,7 @@ The App Engine app's root folder is located at `src/`.
   |   |-- includes/ (common include files)
   |   |-- 404.html (not found page)
   |   |-- 500.html (server error page)
-  |   |-- base.html (master template)
+  |   `-- base.html (master template)
 </pre>
 
 The application code is located at `src/application`.
